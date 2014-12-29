@@ -40,6 +40,12 @@
 
 #include <sys/timex.h>
 
+/* uClibc configured without NTP_LEGACY doesn't provide a ntp_adjtime alias */
+#include <features.h>
+#if defined(__UCLIBC__) && !defined(__UCLIBC_NTP_LEGACY__)
+#define ntp_adjtime	adjtimex
+#endif
+
 #include "ntimed.h"
 
 static double adj_offset = 0;
